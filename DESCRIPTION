@@ -1,0 +1,22 @@
+Package: DMBC
+Type: Package
+Title: Dirichlet-Multinomial Bayes Classifier (DMBC) for Microbiome Classification
+Version: 0.1.0
+Date: 2016-06-22
+Authors@R: c(person("Xiang", "Gao", email="xianggao2006@gmail.com", role =c("aut")),
+  person("Qunfeng","Dong",email="qunfengd@gmail.com", role=c("aut")),
+  person("Huaiying", "Lin", email="ying_eddi2008@gmail.com", role =c("cre")))
+Description: This package implements the machine-learning method described by Gao et al (2016) for microbiome classification using a Bayes classifier based on the Dirichlet-Multinomial distribution.  In addition to classification, the package also identifies a subset of microbial taxa that can achieve the maximum classification accuracy.
+Depends:
+  R(>= 3.2.0),
+  dirmult,
+  AUC,
+  ecodist,
+  MGLM,
+  caret,
+  e1071
+Imports:
+  vegan
+License: MIT
+LazyData: TRUE
+RoxygenNote: 5.0.1
