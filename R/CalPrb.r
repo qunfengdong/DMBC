@@ -94,11 +94,16 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
       Type2Label = 1
     }
 
-    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank, Prior1, Prior2, lh_Type1, lh_Type2, Pos_Type1, Pos_Type2, lhP_Type1, lhP_Type2, PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
+##    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank, Prior1, Prior2, lh_Type1, lh_Type2, Pos_Type1, Pos_Type2, lhP_Type1, lhP_Type2, PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
+    
+    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank,  PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
 
   } #end of rank
+  
   lh_table <- data.frame(t(sapply(lh,function(x) x)))
-  colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Prior1", "Prior2", "lh_Type1", "lh_Type2", "Poster_Type1", "Poster_Type2", "lhP_Type1", "lhP_Type2","Poster_Prio_Type1","Poster_Prio_Type2", "Type1Label", "Type2Label","SelectedFeatures" )
+##  colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Prior1", "Prior2", "lh_Type1", "lh_Type2", "Poster_Type1", "Poster_Type2", "lhP_Type1", "lhP_Type2","Poster_Prio_Type1","Poster_Prio_Type2", "Type1Label", "Type2Label","SelectedFeatures" )
+  
+  colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Type1_Posterior_Prb","Type2_Postereior_Prb", "Type1Label", "Type2Label","SelectedFeatures" )
 
   lh_table
 }
