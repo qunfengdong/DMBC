@@ -17,11 +17,13 @@ Cal_AUC <- function(CV=cv){
     tryCatch({
       tmp <- lapply(CV,function(x) data.frame(x[x$feature_rank == NumberOfFeature,]))
       RankData = Reduce(function(...) merge(...,all=T),tmp)
-      AUC_Area= auc(roc(as.numeric(as.vector(RankData$Poster_Type1)), as.factor(RankData$Type1Label)))
-      AUC_Prior_Area= auc(roc(as.numeric(as.vector(RankData$Poster_Prio_Type1)), as.factor(RankData$Type1Label)))
+     # AUC_Area= auc(roc(as.numeric(as.vector(RankData$Poster_Type1)), as.factor(RankData$Type1Label)))
+      #AUC_Prior_Area= auc(roc(as.numeric(as.vector(RankData$Poster_Prio_Type1)), as.factor(RankData$Type1Label)))
+      AUC_Area= auc(roc(as.numeric(as.vector(RankData$Type1_Posterior_Prb)), as.factor(RankData$Type1Label)))
       fnum <- sort(table(unlist(strsplit(as.character(RankData$SelectedFeatures),";"))),decreasing = T)
       features <- names(fnum[1:NumberOfFeature])
-      auc_res[[NumberOfFeature]] <- data.frame(RankData[1,1:2], NumberOfFeature, AUC_Area, AUC_Prior_Area,Features=paste(features,collapse = ";"))
+     # auc_res[[NumberOfFeature]] <- data.frame(RankData[1,1:2], NumberOfFeature, AUC_Area, AUC_Prior_Area,Features=paste(features,collapse = ";"))
+      auc_res[[NumberOfFeature]] <- data.frame(RankData[1,1:2], NumberOfFeature, AUC_Area,Features=paste(features,collapse = ";"))
 
     }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
   }
