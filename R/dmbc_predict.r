@@ -33,7 +33,7 @@
 
 
 dmbc_predict <- function(data=data,testset = testset,auc_out=auc_out,col_start =3,type_col=2,Prior1=0.5,Prior2=1-Prior1){
-  namelist <- auc_out$Features[which.max(auc_out$AUC_Prior_Area)]
+  namelist <- auc_out$Features[which.max(auc_out$AUC_Area)]
   NameList <- as.vector(unlist(strsplit(as.character(namelist),";")))
 
   Disease <- levels(data[,type_col])
