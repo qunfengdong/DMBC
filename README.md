@@ -18,7 +18,7 @@ There are totally 6 functions included in the package. The most important one is
 * best_cm	Confusion Matrix for the Best Model
 * CalPrb	Calculate Likelihood based on Dirichlet-multinomial distribution estimated parameters
 * Cal_AUC	Calculate Area Under the ROC Curve from Leave-One-Out Cross-Validation
-* dmbc_predict	Predict probability from DMBC model
+* dmbc_predict	Predict probability from DMBC model 
 * FS	Filter and Feature Selection based on Wilcoxon Rank-Sum test
 * loocv	Leave one out cross-validation
 * test	Example Testing Data
