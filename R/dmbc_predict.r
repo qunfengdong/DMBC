@@ -82,12 +82,12 @@ dmbc_predict <- function(data=data,testset = testset,auc_out=auc_out,col_start =
   test_res <- list()
   for (r in 1:nrow(test)){
     ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type1)
-    pdfln_Type1 <- ddirm(NewTestTotal[r,], t(as.matrix(alpha_Type1)))
+    pdfln_Type1 <- ddirmn(NewTestTotal[r,], t(as.matrix(alpha_Type1)))
     lh_Type1=exp(pdfln_Type1)
     lhP_Type1 = lh_Type1*Prior1
 
     ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type2)
-    pdfln_Type2 <- ddirm(NewTestTotal[r,], t(as.matrix(alpha_Type2)))
+    pdfln_Type2 <- ddirmn(NewTestTotal[r,], t(as.matrix(alpha_Type2)))
     lh_Type2=exp(pdfln_Type2)
     lhP_Type2 = lh_Type2*Prior2
 

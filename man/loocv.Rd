@@ -32,4 +32,3 @@ Implementation of leave-one-out cross-validataion. It takes in an entire dataset
 data(training)
 loocv(training)
 }
-

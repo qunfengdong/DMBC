@@ -36,4 +36,3 @@ Given a training set, this function performs feature selection based on several 
 data(training)
 FS(training)
 }
-

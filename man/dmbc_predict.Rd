@@ -44,4 +44,3 @@ auc_out <- Cal_AUC(loocv(training))
 #predict unknown test set using training set and auc results.
 dmbc_predict(data=training,testset=test,auc_out=auc_out)
 }
-

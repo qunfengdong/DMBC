@@ -34,4 +34,3 @@ train <- training[-idx,]
 
 CalPrb(FS(train),test) # This may take up to one minute
 }
-

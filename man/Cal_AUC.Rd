@@ -19,4 +19,3 @@ This function calculates the AUC for each selected subset of features from DMBC 
 data(training)
 Cal_AUC(loocv(training))
 }
-

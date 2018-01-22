@@ -15,4 +15,3 @@ This is a simulated testing dataset with no label for each sample.
 data(test)
 }
 \keyword{datasets}
-
