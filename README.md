@@ -6,8 +6,6 @@ This package implements the machine-learning method described by Gao et al (2016
 
 Please make sure you have devtools installed in your R and do the following:
 
-* Note: There has been a new release of MGLM package, hence some of the function names were changed. We are in the process of re-coding the DMBC package. For now, please install MGLM version 0.0.9 from source for DMBC to run smoothly.
-
 ```R
 library(devtools)
 install_github("qunfengdong/DMBC")
