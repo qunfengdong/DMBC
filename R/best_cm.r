@@ -8,8 +8,15 @@
 #'
 #' @examples
 #' data(training)
+#'
+#' ### using leave-one-out cross-validation ###
 #' cv = loocv(training)
+#'
+#' ### using 10-fold cross-validation ###
+#' cv = tfcv(training)
+#'
 #' auc_out = Cal_AUC(cv)
+#'
 #' best_cm(CV=cv,auc_out=auc_out)
 #'
 best_cm <- function(CV=cv, auc_out=auc_out){
@@ -20,6 +27,6 @@ best_cm <- function(CV=cv, auc_out=auc_out){
   pred <- as.numeric(as.numeric(as.vector(file_rank$Type1_Posterior_Prb)) > as.numeric(as.vector(file_rank$Type2_Postereior_Prb)))
   truth <- as.numeric(as.vector(file_rank$Type1Label))
 
-  confusionMatrix(pred,truth)
+  return(confusionMatrix(pred,truth))
 
 }

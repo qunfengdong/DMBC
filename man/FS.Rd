@@ -30,7 +30,7 @@ A list of 2: Feature and CountData.
 \code{CountData}     A data frame containing balanced data.
 }
 \description{
-Given a training set, this function performs feature selection based on several thresholds: (1). Average relative abudance in each cohort class (minimum relative abundance by default is 0.25%), (2). Total reads per sample (minimum reads per sample is 500 by default), (3). Non-zero ratio out of all samples (By default, at least 10% of the samples should have have non zero value.)
+Given a training set, this function performs feature selection based on several thresholds: (1). Average relative abudance in each cohort class (minimum relative abundance by default is 0.25\%), (2). Total reads per sample (minimum reads per sample is 500 by default), (3). Non-zero ratio out of all samples (By default, at least 10\% of the samples should have have non zero value.)
 }
 \examples{
 data(training)

@@ -23,7 +23,10 @@
 #' #load test dataset
 #' data(test)
 #'
-#' #calculate AUC based on training set
+#'## calculate AUC based on training set using 10-fold cv ##
+#' auc_out <- Cal_AUC(tfcv(training))
+#'
+#'## calculate AUC based on training set using leave-one-out cv ##
 #' auc_out <- Cal_AUC(loocv(training))
 #'
 #' #predict unknown test set using training set and auc results.
@@ -66,21 +69,21 @@ dmbc_predict <- function(data=data,testset = testset,auc_out=auc_out,col_start =
   alpha_Type2 = fit4$gamma
 
   ###### predict test set #####
-  test = testset
+
   for (t in NameList){
-    if (! (t %in% colnames(test)) ){
-      test <- data.frame(test,rep(0,nrow(test)))
-      colnames(test)[ncol(test)] <- t
+    if (! (t %in% colnames(testset)) ){
+      testset <- data.frame(testset,rep(0,nrow(testset)))
+      colnames(testset)[ncol(testset)] <- t
     }
   }
 
-  NewTestSignature = test[, colnames(test)%in% NameList]
-  NewTestNonSignature = test[, !colnames(test)%in% NameList]
+  NewTestSignature = testset[, colnames(testset)%in% NameList]
+  NewTestNonSignature = testset[, !colnames(testset)%in% NameList]
   NewTestNonSignature$Others = rowSums(NewTestNonSignature)
   NewTestTotal = data.frame(NewTestSignature, NewTestNonSignature$Others)
 
   test_res <- list()
-  for (r in 1:nrow(test)){
+  for (r in 1:nrow(testset)){
     ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type1)
     pdfln_Type1 <- ddirmn(NewTestTotal[r,], t(as.matrix(alpha_Type1)))
     lh_Type1=exp(pdfln_Type1)
@@ -97,12 +100,12 @@ dmbc_predict <- function(data=data,testset = testset,auc_out=auc_out,col_start =
     PosP_Type1 = lhP_Type1/(lhP_Type1+lhP_Type2)
     PosP_Type2 = lhP_Type2/(lhP_Type1+lhP_Type2)
 
-    test_res[[r]] <- as.matrix(t(c(rownames(test)[r],Disease[1], PosP_Type1, Disease[2], PosP_Type2,paste(NameList,collapse=";"))))
+    test_res[[r]] <- as.matrix(t(c(rownames(testset)[r],Disease[1], PosP_Type1, Disease[2], PosP_Type2,paste(NameList,collapse=";"))))
 
   }
 
   out <- data.frame(t(sapply(test_res,function(x) x)))
   colnames(out) <- c("test_idx","Group1","Group1_prb","Group2","Group2_prb","Features")
 
-  out
+  return(out)
 }

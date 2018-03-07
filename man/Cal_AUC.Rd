@@ -17,5 +17,10 @@ This function calculates the AUC for each selected subset of features from DMBC 
 }
 \examples{
 data(training)
+
+#### using 10-fold cross-validation ###
+Cal_AUC(tfcv(training))
+
+#### using leave-one-out cross-validation ###
 Cal_AUC(loocv(training))
 }

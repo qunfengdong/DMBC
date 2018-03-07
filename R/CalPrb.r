@@ -48,9 +48,9 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
     NewDFTotal = data.frame(NewDF2[, 1:(col_start-1)],NewDF, NewDF2$Others)
 
     ###### merge in test row
-    test = testSet
-    NewTestSignature = test[, colnames(Genus) %in% NameList]
-    NewTestNonSignature = test[, !colnames(Genus)%in% NameList]
+
+    NewTestSignature = testSet[, colnames(Genus) %in% NameList]
+    NewTestNonSignature = testSet[, !colnames(Genus)%in% NameList]
     NewTestNonSignature$Others = rowSums(NewTestNonSignature[, col_start:col_end2])
     NewTestTotal = data.frame(NewTestNonSignature[, 1:(col_start-1)],NewTestSignature, NewTestNonSignature$Others)
 
@@ -68,42 +68,49 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
     alpha_Type1 = fit3$gamma
     alpha_Type2 = fit4$gamma
 
-    ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type1)
-    pdfln_Type1 <- ddirmn(NewTestTotal[,-(1:(col_start-1))], t(as.matrix(alpha_Type1)))
-    lh_Type1=exp(pdfln_Type1)
-    lhP_Type1 = lh_Type1*Prior1
+    testlist <- list()
+    for (r in 1:nrow(testSet)){
+      ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type1)
+      pdfln_Type1 <- ddirmn(NewTestTotal[r,-(1:(col_start-1))], t(as.matrix(alpha_Type1)))
+      lh_Type1=exp(pdfln_Type1)
+      lhP_Type1 = lh_Type1*Prior1
 
-    ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type2)
-    pdfln_Type2 <- ddirmn(NewTestTotal[,-(1:(col_start-1))], t(as.matrix(alpha_Type2)))
-    lh_Type2=exp(pdfln_Type2)
-    lhP_Type2 = lh_Type2*Prior2
+      ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type2)
+      pdfln_Type2 <- ddirmn(NewTestTotal[r,-(1:(col_start-1))], t(as.matrix(alpha_Type2)))
+      lh_Type2=exp(pdfln_Type2)
+      lhP_Type2 = lh_Type2*Prior2
 
-    Pos_Type1 = lh_Type1/(lh_Type1+lh_Type2)
-    Pos_Type2 = lh_Type2/(lh_Type1+lh_Type2)
+      Pos_Type1 = lh_Type1/(lh_Type1+lh_Type2)
+      Pos_Type2 = lh_Type2/(lh_Type1+lh_Type2)
 
-    PosP_Type1 = lhP_Type1/(lhP_Type1+lhP_Type2)
-    PosP_Type2 = lhP_Type2/(lhP_Type1+lhP_Type2)
+      PosP_Type1 = lhP_Type1/(lhP_Type1+lhP_Type2)
+      PosP_Type2 = lhP_Type2/(lhP_Type1+lhP_Type2)
 
-    #### Create truth labels ####
+      #### Create truth labels ####
 
-    if(testSet[,type_col] == Disease[1]) {
-      Type1Label = 1
-      Type2Label = 0
-    } else if (testSet[,type_col] == Disease[2]) {
-      Type1Label = 0
-      Type2Label = 1
+      if(testSet[r,type_col] == Disease[1]) {
+        Type1Label = 1
+        Type2Label = 0
+      } else if (testSet[r,type_col] == Disease[2]) {
+        Type1Label = 0
+        Type2Label = 1
+      }
+
+      testlist[[r]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet)[r], rank,  PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
     }
+
+
 
 ##    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank, Prior1, Prior2, lh_Type1, lh_Type2, Pos_Type1, Pos_Type2, lhP_Type1, lhP_Type2, PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
 
-    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank,  PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
+    lh[[rank]] <- data.frame(t(sapply(testlist,'[')))
 
   } #end of rank
 
-  lh_table <- data.frame(t(sapply(lh,function(x) x)))
+  lh_table <- data.frame(do.call(rbind,lh))
 ##  colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Prior1", "Prior2", "lh_Type1", "lh_Type2", "Poster_Type1", "Poster_Type2", "lhP_Type1", "lhP_Type2","Poster_Prio_Type1","Poster_Prio_Type2", "Type1Label", "Type2Label","SelectedFeatures" )
 
   colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Type1_Posterior_Prb","Type2_Postereior_Prb", "Type1Label", "Type2Label","SelectedFeatures" )
 
-  lh_table
+  return(lh_table)
 }

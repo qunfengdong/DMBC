@@ -38,7 +38,10 @@ data(training)
 #load test dataset
 data(test)
 
-#calculate AUC based on training set
+## calculate AUC based on training set using 10-fold cv ##
+auc_out <- Cal_AUC(tfcv(training))
+
+## calculate AUC based on training set using leave-one-out cv ##
 auc_out <- Cal_AUC(loocv(training))
 
 #predict unknown test set using training set and auc results.

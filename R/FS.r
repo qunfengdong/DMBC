@@ -1,7 +1,7 @@
 #' @title Filter and Feature Selection based on Wilcoxon Rank-Sum test
 #'
 #' @description
-#' Given a training set, this function performs feature selection based on several thresholds: (1). Average relative abudance in each cohort class (minimum relative abundance by default is 0.25%), (2). Total reads per sample (minimum reads per sample is 500 by default), (3). Non-zero ratio out of all samples (By default, at least 10% of the samples should have have non zero value.)
+#' Given a training set, this function performs feature selection based on several thresholds: (1). Average relative abudance in each cohort class (minimum relative abundance by default is 0.25\%), (2). Total reads per sample (minimum reads per sample is 500 by default), (3). Non-zero ratio out of all samples (By default, at least 10\% of the samples should have have non zero value.)
 #' @param training A data frame of training set.
 #' @param type_col An index indicating at which column is group/type variable. The default is the 3rd column.
 #' @param col_start An index indicating at which column is the beginning of bacteria (features) data. Default is the 2nd column.
@@ -88,7 +88,7 @@ FS <- function(training=data,type_col=2,col_start=3,Cutoff_mean=0.0005,Cutoff_ra
   #outfile = gsub("\\ ","_",outfile)
   #write.csv(P_value, outfile, quote=F, row.names=T, col.names=T)
 
-  list(Feature=P_value[order(as.numeric(as.character(P_value$P_Wilcoxon))),], CountData=training)
+  return(list(Feature=P_value[order(as.numeric(as.character(P_value$P_Wilcoxon))),], CountData=training))
 
 }
 

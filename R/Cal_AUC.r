@@ -7,11 +7,18 @@
 #' @return A data frame of 6 columns, comparison group1 label, comparison group2 label, number of features included in the model, AUC, AUC * prior probability, and selected features.
 #' @examples
 #' data(training)
+#'
+#' #### using 10-fold cross-validation ###
+#' Cal_AUC(tfcv(training))
+#'
+#' #### using leave-one-out cross-validation ###
 #' Cal_AUC(loocv(training))
 
 
+
 Cal_AUC <- function(CV=cv){
-  HighestRank_allRow <- min(sapply(CV,nrow))
+  HighestRank_allRow <- min(sapply(CV,function(x) max(as.numeric(x$feature_rank))))
+#  HighestRank_allRow <- max(sapply(CV,function(x) max(as.numeric(x$feature_rank))))
   auc_res <- list()
   for (NumberOfFeature in 1:HighestRank_allRow) {
     tryCatch({
@@ -27,5 +34,5 @@ Cal_AUC <- function(CV=cv){
 
     }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
   }
-  Reduce(function(...) merge(...,all=T),auc_res)
+  return(Reduce(function(...) merge(...,all=T),auc_res))
 }
