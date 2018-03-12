@@ -19,7 +19,7 @@
 
 
 FS <- function(training=data,type_col=2,col_start=3,Cutoff_mean=0.0005,Cutoff_ratio=0.1,totalReadsCutoff=500, Cutoff_pvalue = 0.5){
-  ### Filter out samples less than totalReadsCutoff
+  ### Filter out samples less than totalReadsCutoff ####
   col_end=ncol(training)
   training <- training[rowSums(training[,col_start:col_end]) >= totalReadsCutoff,]
 

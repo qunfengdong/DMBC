@@ -15,10 +15,12 @@
 
 loocv <- function(data=data, type_col=2, col_start=3,Cutoff_mean=0.0005,Cutoff_ratio=0.1,totalReadsCutoff=500, Cutoff_pvalue = 0.5){
   res <- list()
-  for (i in 1:nrow(data)){
-    testSet <- data[i,]
-    training <- data[-i,]
-    FS_out <- FS(training=training,type_col=type_col,col_start=col_start,Cutoff_mean=Cutoff_mean,Cutoff_ratio=Cutoff_ratio,totalReadsCutoff=totalReadsCutoff, Cutoff_pvalue = Cutoff_pvalue)
+  FS_out_all <- FS(training=data,type_col=type_col,col_start=col_start,Cutoff_mean=Cutoff_mean,Cutoff_ratio=Cutoff_ratio,totalReadsCutoff=totalReadsCutoff, Cutoff_pvalue = Cutoff_pvalue)
+  tmpData <- FS_out_all$CountData
+  for (i in 1:nrow(tmpData)){
+    testSet <- tmpData[i,]
+    FS_out <- FS_out_all
+    FS_out$CountData <- tmpData[-i,]
     res[[i]] <- CalPrb(FS_out=FS_out,testSet=testSet,col_start=col_start,type_col=type_col,HighestRank=nrow(FS_out$Feature))
   }
   return(res)

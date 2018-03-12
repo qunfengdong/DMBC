@@ -7,6 +7,7 @@ Xiang Gao, Huaiying Lin, Qunfeng Dong (2017); [A Dirichlet-Multinomial Bayes Cla
 
 ## Update
 * 3/7/2018	v0.2.0	Add ten-fold cross-validation function in addition to the existing leave-one-out cross-validation function
+* 3/12/2018	v0.2.1	Increase consistency of feature selection.
 
 ## Installation
 
