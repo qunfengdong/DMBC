@@ -3,13 +3,13 @@
 \docType{data}
 \name{test}
 \alias{test}
-\title{Example Testing Data}
-\format{An object of class \code{data.frame} with 6 rows and 7 columns.}
+\title{Example Training Data}
+\format{An object of class \code{data.frame} with 5 rows and 11 columns.}
 \usage{
 data(test)
 }
 \description{
-This is a simulated testing dataset with no label for each sample.
+This is a simulated testing dataset with label for each sample.Relative abundance is used in DMBC version 1.1.0
 }
 \examples{
 data(test)

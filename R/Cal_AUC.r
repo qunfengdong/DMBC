@@ -17,10 +17,10 @@
 
 
 Cal_AUC <- function(CV=cv){
-  HighestRank_allRow <- min(sapply(CV,function(x) max(as.numeric(x$feature_rank))))
-#  HighestRank_allRow <- max(sapply(CV,function(x) max(as.numeric(x$feature_rank))))
+  #HighestRank_allRow <- min(sapply(CV,function(x) max(as.numeric(x$feature_rank))))
+  HighestRank_allRow <- max(sapply(CV,function(x) max(as.numeric(as.character(x$feature_rank)))))
   auc_res <- list()
-  for (NumberOfFeature in 1:HighestRank_allRow) {
+  for (NumberOfFeature in 3:HighestRank_allRow) {
     tryCatch({
       tmp <- lapply(CV,function(x) data.frame(x[x$feature_rank == NumberOfFeature,]))
       RankData = Reduce(function(...) merge(...,all=T),tmp)

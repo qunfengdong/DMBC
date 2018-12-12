@@ -32,27 +32,22 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
   Prior2 = TotalType2/(TotalType1+TotalType2)
 
   lh <- list()
-  for(rank in 1:HighestRank) {
-
+  for(rank in 3:HighestRank) {
+   print(rank)
 
     ######## choose the signature taxa and merge the training data
-
-    #NameList = as.vector(P_table[as.numeric(as.character(P_table$P_Wilcoxon))<0.2,]$Genera)
-    #select the NameList based on the rank
+    ####select the NameList based on the rank
     NameList = as.vector(rownames(SortP)[1:rank])
     NewDF <- Genus[,colnames(Genus) %in% NameList]
-    NewDF2 <- Genus[,!colnames(Genus)%in% NameList]
 
-    col_end2 = dim(NewDF2)[2]
-    NewDF2$Others = rowSums(NewDF2[, col_start:col_end2])
-    NewDFTotal = data.frame(NewDF2[, 1:(col_start-1)],NewDF, NewDF2$Others)
+
+    ####In the case of picked 63 bacterium, we don't need to consider others(sum of rest of the columns as others)
+    NewDFTotal = data.frame(Genus[, 1:(col_start-1)],NewDF)
 
     ###### merge in test row
 
     NewTestSignature = testSet[, colnames(Genus) %in% NameList]
-    NewTestNonSignature = testSet[, !colnames(Genus)%in% NameList]
-    NewTestNonSignature$Others = rowSums(NewTestNonSignature[, col_start:col_end2])
-    NewTestTotal = data.frame(NewTestNonSignature[, 1:(col_start-1)],NewTestSignature, NewTestNonSignature$Others)
+    NewTestTotal = data.frame(testSet[, 1:(col_start-1)],NewTestSignature)
 
     rep2_Type1 = NewDFTotal[NewDFTotal[,type_col] ==Disease[1],]
     rep2_Type2 = NewDFTotal[NewDFTotal[,type_col] ==Disease[2],]
@@ -60,9 +55,9 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
 
     ############Estimate Dirchlet-Multinomial parameters
     ###### Estimate the parameters from the control data
-    fit3 <- dirmult(rep2_Type1[,-(1:(col_start-1))],epsilon=10^(-4),trace=FALSE)
+    fit3 <- dirmult(round(rep2_Type1[,-(1:(col_start-1))]),epsilon=10^(-4),trace=FALSE)
     ###### Estimate the paramenters from the baseline data
-    fit4 <- dirmult(rep2_Type2[,-(1:(col_start-1))],epsilon=10^(-4),trace=FALSE)
+    fit4 <- dirmult(round(rep2_Type2[,-(1:(col_start-1))]),epsilon=10^(-4),trace=FALSE)
 
     #########Calculate the likelihood of the test sample being Type1 and Type2
     alpha_Type1 = fit3$gamma
@@ -71,12 +66,12 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
     testlist <- list()
     for (r in 1:nrow(testSet)){
       ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type1)
-      pdfln_Type1 <- ddirmn(NewTestTotal[r,-(1:(col_start-1))], t(as.matrix(alpha_Type1)))
+      pdfln_Type1 <- ddirmn(round(NewTestTotal[r,-(1:(col_start-1))]), t(as.matrix(alpha_Type1)))
       lh_Type1=exp(pdfln_Type1)
       lhP_Type1 = lh_Type1*Prior1
 
       ##### Calculate log of Dirichlet multinomial probability mass function P(x|Type2)
-      pdfln_Type2 <- ddirmn(NewTestTotal[r,-(1:(col_start-1))], t(as.matrix(alpha_Type2)))
+      pdfln_Type2 <- ddirmn(round(NewTestTotal[r,-(1:(col_start-1))]), t(as.matrix(alpha_Type2)))
       lh_Type2=exp(pdfln_Type2)
       lhP_Type2 = lh_Type2*Prior2
 
@@ -98,18 +93,11 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
 
       testlist[[r]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet)[r], rank,  PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
     }
-
-
-
-##    lh[[rank]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet), rank, Prior1, Prior2, lh_Type1, lh_Type2, Pos_Type1, Pos_Type2, lhP_Type1, lhP_Type2, PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
-
     lh[[rank]] <- data.frame(t(sapply(testlist,'[')))
 
   } #end of rank
 
   lh_table <- data.frame(do.call(rbind,lh))
-##  colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Prior1", "Prior2", "lh_Type1", "lh_Type2", "Poster_Type1", "Poster_Type2", "lhP_Type1", "lhP_Type2","Poster_Prio_Type1","Poster_Prio_Type2", "Type1Label", "Type2Label","SelectedFeatures" )
-
   colnames(lh_table) = c("Type1", "Type2", "row", "feature_rank", "Type1_Posterior_Prb","Type2_Postereior_Prb", "Type1Label", "Type2Label","SelectedFeatures" )
 
   return(lh_table)

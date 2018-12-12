@@ -1,6 +1,6 @@
-#' Example Testing Data
+#' Example Training Data
 #'
-#' This is a simulated testing dataset with no label for each sample.
+#' This is a simulated testing dataset with label for each sample.Relative abundance is used in DMBC version 1.1.0
 #'
 #' @docType data
 #' @usage data(test)
