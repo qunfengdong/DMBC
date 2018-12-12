@@ -6,4 +6,4 @@ export(FS)
 export(best_cm)
 export(dmbc_predict)
 export(loocv)
-export(tfcv)
+
