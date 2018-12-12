@@ -33,7 +33,6 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
 
   lh <- list()
   for(rank in 3:HighestRank) {
-   print(rank)
 
     ######## choose the signature taxa and merge the training data
     ####select the NameList based on the rank
