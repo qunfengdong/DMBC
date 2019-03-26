@@ -23,9 +23,6 @@
 #' #load test dataset
 #' data(test)
 #'
-#'## calculate AUC based on training set using 10-fold cv ##
-#' auc_out <- Cal_AUC(tfcv(training))  ### not included for DMBC v1.1.0
-#'
 #'## calculate AUC based on training set using leave-one-out cv ##
 #' auc_out <- Cal_AUC(loocv(training))
 #'
