@@ -4,8 +4,8 @@
 \alias{CalPrb}
 \title{Calculate Likelihood based on Dirichlet-multinomial distribution estimated parameters}
 \usage{
-CalPrb(FS_out = FS_out, testSet = testSet, col_start = 3, type_col = 2,
-  HighestRank = nrow(FS_out$Feature))
+CalPrb(FS_out = FS_out, testSet = testSet, col_start = 3,
+  type_col = 2, HighestRank = nrow(FS_out$Feature))
 }
 \arguments{
 \item{FS_out}{An object from the FeatureSelection()}

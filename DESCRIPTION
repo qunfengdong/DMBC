@@ -20,4 +20,4 @@ Imports:
   vegan
 License: MIT
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
