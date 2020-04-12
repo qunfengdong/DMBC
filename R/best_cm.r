@@ -12,9 +12,6 @@
 #' ### using leave-one-out cross-validation ###
 #' cv = loocv(training)
 #'
-#' ### using 10-fold cross-validation ###
-#' cv = tfcv(training)
-#'
 #' auc_out = Cal_AUC(cv)
 #'
 #' best_cm(CV=cv,auc_out=auc_out)

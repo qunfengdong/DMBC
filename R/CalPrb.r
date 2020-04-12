@@ -33,7 +33,6 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
 
   lh <- list()
   for(rank in 3:HighestRank) {
-   print(rank)
 
     ######## choose the signature taxa and merge the training data
     ####select the NameList based on the rank
@@ -55,8 +54,6 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
 
     ############Estimate Dirchlet-Multinomial parameters
     ###### Estimate the parameters from the control data
-    tryCatch({
-
     fit3 <- dirmult(round(rep2_Type1[,-(1:(col_start-1))]),epsilon=10^(-4),trace=FALSE)
     ###### Estimate the paramenters from the baseline data
     fit4 <- dirmult(round(rep2_Type2[,-(1:(col_start-1))]),epsilon=10^(-4),trace=FALSE)
@@ -96,7 +93,7 @@ CalPrb <- function(FS_out=FS_out,testSet=testSet,col_start=3,type_col=2,HighestR
       testlist[[r]] <- as.matrix(t(c(Disease[1], Disease[2], rownames(testSet)[r], rank,  PosP_Type1, PosP_Type2, Type1Label, Type2Label,paste(NameList,collapse=";"))))
     }
     lh[[rank]] <- data.frame(t(sapply(testlist,'[')))
-    }, error=function(e){cat("ERROR :",conditionMessage(e), "\n")})
+
   } #end of rank
 
   lh_table <- data.frame(do.call(rbind,lh))

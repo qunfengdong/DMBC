@@ -4,15 +4,9 @@
 \alias{loocv}
 \title{Leave one out cross-validation}
 \usage{
-loocv(
-  data = data,
-  type_col = 2,
-  col_start = 3,
-  Cutoff_mean = 0.001,
-  Cutoff_ratio = 0.1,
-  totalReadsCutoff = 500,
-  Cutoff_pvalue = 1
-)
+loocv(data = data, type_col = 2, col_start = 3,
+  Cutoff_mean = 0.001, Cutoff_ratio = 0.1, totalReadsCutoff = 500,
+  Cutoff_pvalue = 1)
 }
 \arguments{
 \item{data}{A data frame validation set with first column the sample IDs, second column the group variable (classificatoin variable/disease type), and third column the beginning of count table.}

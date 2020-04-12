@@ -81,14 +81,10 @@ FS <- function(training=data,type_col=2,col_start=3,Cutoff_mean=0.001,Cutoff_rat
 ##### ratio of mean *(-log10(P))
   meanratio <- vector()
   for (ele in 1:nrow(P_value)) {
-    if(P_value$`mean(Type 1)`[ele] == 0 && P_value$`mean(Type 2)`[ele] == 0) {
-      meanratio[ele] <- 200
-    } else {
-      if(P_value$`mean(Type 1)`[ele] > P_value$`mean(Type 2)`[ele]) {
-        meanratio[ele] = P_value$`mean(Type 1)`[ele]/P_value$`mean(Type 2)`[ele]
-      }else{
-        meanratio[ele] = P_value$`mean(Type 2)`[ele]/P_value$`mean(Type 1)`[ele]
-      }
+    if(P_value$`mean(Type 1)`[ele] > P_value$`mean(Type 2)`[ele]) {
+      meanratio[ele] = P_value$`mean(Type 1)`[ele]/P_value$`mean(Type 2)`[ele]
+    }else{
+      meanratio[ele] = P_value$`mean(Type 2)`[ele]/P_value$`mean(Type 1)`[ele]
     }
     if (meanratio[ele] == Inf) {
       meanratio[ele] <- 200
