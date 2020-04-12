@@ -14,7 +14,8 @@ data(training)
 data(test)
 CV=loocv(training)
 auc_out =Cal_AUC(CV)
-dmbc_predict(data=Meta_data,testset=test,auc_out=auc_out)
+dmbc_predict(data=Meta_data,testset=test,auc_out=auc_out) ##delete
+dmbc_predict(data=training,testSet=test,auc_out=auc_out)
 }
 \examples{
 data(training)

@@ -4,8 +4,15 @@
 \alias{dmbc_predict}
 \title{Predict probability from DMBC model}
 \usage{
-dmbc_predict(data = data, testSet = testSet, auc_out = auc_out,
-  col_start = 3, type_col = 2, Prior1 = 0.5, Prior2 = 1 - Prior1)
+dmbc_predict(
+  data = data,
+  testSet = testSet,
+  auc_out = auc_out,
+  col_start = 3,
+  type_col = 2,
+  Prior1 = 0.5,
+  Prior2 = 1 - Prior1
+)
 }
 \arguments{
 \item{data}{Validation dataset with rows are samples, columns are features. The first column should be the sample ID, second column group variable (Disease type, the label you want to classify on).}
@@ -37,6 +44,9 @@ data(training)
 
 #load test dataset
 data(test)
+
+## calculate AUC based on training set using 10-fold cv ##
+auc_out <- Cal_AUC(tfcv(training))
 
 ## calculate AUC based on training set using leave-one-out cv ##
 auc_out <- Cal_AUC(loocv(training))

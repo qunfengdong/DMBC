@@ -6,9 +6,11 @@ This package implements the machine-learning method described by Gao et al (2016
 Xiang Gao, Huaiying Lin, Qunfeng Dong (2017); [A Dirichlet-Multinomial Bayes Classifier for Disease Diagnosis with Microbial Compositions](http://msphere.asm.org/content/msph/2/6/e00536-17.full.pdf), mSphere, Volume: 2, Issue: 6.
 
 ## Update
-* 12/11/2018	v1.1.0	changes include 1) Relative abaundance table is used as input. 2) Variable "Others", which is the sum of all the variables except for the selected features, is not considered as a feature in this version. 3) Ten fold validation function is temporarily disabled. 4) Pi score instead of the wilcoxon p value is used to rank the importantce of features (Xiao Y, Hsiao TH, Suresh U, et al. A novel significance score for gene selection and ranking. Bioinformatics. 2012;30(6):801-7. )
-* 3/12/2018 v0.2.1 Increase consistency of feature selection.
 * 3/7/2018 v0.2.0 Add ten-fold cross-validation function in addition to the existing leave-one-out cross-validation function
+* 3/12/2018 v0.2.1 Increase consistency of feature selection.
+* 12/11/2018	v1.1.0	changes include 1) use relative abaundance as input, and in the function, it will be multiple by 10000 and rounding to count data. 2) Will not sum the rest of the variable to create a new vailable called "rest". 3) use Pi score instead of the wilcoxon p value to rank the importantce of features (Xiao Y, Hsiao TH, Suresh U, et al. A novel significance score for gene selection and ranking. Bioinformatics. 2012;30(6):801-7. )
+
+* 04/12/2020	v1.1.1	1) skip the training set which are not satisfying multinormial distribution. The cases include those subset of your sample which might have all zero in all the selected subset of features. 2) The ten-fold cross validation function was added back.
 
 ## Installation
 
@@ -29,6 +31,7 @@ There are totally 6 functions included in the package. The most important one is
 * dmbc_predict	: Predict probability from DMBC model 
 * FS	: Filter and Feature Selection based on Wilcoxon Rank-Sum test
 * loocv	: Leave-one-out cross-validation
+* tfcv	: Ten-fold cross-validation
 * test	: Example Testing Data
 * training	: Example Training Data
 

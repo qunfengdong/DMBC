@@ -1,13 +1,15 @@
 Package: DMBC
 Type: Package
 Title: Dirichlet-Multinomial Bayes Classifier (DMBC) for Microbiome Classification
-Version: 1.1.0
-Date: 2018-12-11
+Version: 1.1.1
+Date: 2020-04-12
 Authors@R: c(person("Xiang", "Gao", email="xianggao2006@gmail.com", role =c("aut")),
   person("Qunfeng","Dong",email="qunfengd@gmail.com", role=c("aut")),
   person("Huaiying", "Lin", email="ying_eddi2008@gmail.com", role =c("cre")))
 Description: This package implements the machine-learning method described by Gao et al (2016) for microbiome classification using a Bayes classifier based on the Dirichlet-Multinomial distribution.  In addition to classification, the package also identifies a subset of microbial taxa that can achieve the maximum classification accuracy.
-  12/11/2018	v1.1.0 has the following updates:	1) Relative abaundance table is used as input. 2) Variable "Others", which is the sum of all the variables except for the selected features, is not considered as a feature in this version. 3) Ten fold validation function is temporarily disabled. 4) Pi score instead of the wilcoxon p value is used to rank the importantce of features (Xiao Y, Hsiao TH, Suresh U, et al. A novel significance score for gene selection and ranking. Bioinformatics. 2012;30(6):801-7. )
+  The updates includes: 1) The Input format now is that the data column is the relative abundance of the bacteria, instead of the abosulte count table.
+                        2) Sum of Other features is not used as a feature.
+                        3) The most important improvement is using the Pi score instead of the wilcoxon P value in FS.r funciton to rank the importances of the features.(Xiao Y, Hsiao TH, Suresh U, et al. A novel significance score for gene selection and ranking. Bioinformatics. 2012;30(6):801-7. )
 Depends:
   R(>= 3.2.0),
   dirmult,
@@ -20,4 +22,4 @@ Imports:
   vegan
 License: MIT
 LazyData: TRUE
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

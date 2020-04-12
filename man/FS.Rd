@@ -4,9 +4,15 @@
 \alias{FS}
 \title{Filter and Feature Selection based on Wilcoxon Rank-Sum test}
 \usage{
-FS(training = data, type_col = 2, col_start = 3,
-  Cutoff_mean = 0.001, Cutoff_ratio = 0.1, totalReadsCutoff = 500,
-  Cutoff_pvalue = 1)
+FS(
+  training = data,
+  type_col = 2,
+  col_start = 3,
+  Cutoff_mean = 0.001,
+  Cutoff_ratio = 0.1,
+  totalReadsCutoff = 500,
+  Cutoff_pvalue = 1
+)
 }
 \arguments{
 \item{training}{A data frame of training set.}
