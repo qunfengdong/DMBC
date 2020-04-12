@@ -8,6 +8,9 @@
 #' @examples
 #' data(training)
 #'
+#' #### using 10-fold cross-validation ###
+#' Cal_AUC(tfcv(training))
+#'
 #' #### using leave-one-out cross-validation ###
 #' Cal_AUC(loocv(training))
 
